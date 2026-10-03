@@ -5,6 +5,9 @@ export default tseslint.config(
     ignores: [
       '**/node_modules/**',
       '**/.next/**',
+      '**/.open-next/**',
+      '**/.wrangler/**',
+      '**/cloudflare-env.d.ts',
       '**/artifacts/**',
       '**/cache/**',
       '**/next-env.d.ts',

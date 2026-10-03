@@ -288,3 +288,20 @@ After `npm run build`, install a Playwright browser (`npx playwright install chr
 Canonical deployment IDs were checked against [SaucerSwap contract deployments](https://docs.saucerswap.finance/developers/contracts). The adapter implements [V1 swap quotes](https://docs.saucerswap.finance/developers/v1/swap/swap-quote) and [V1 reserves](https://docs.saucerswap.finance/developers/v1/liquidity/get-pool-reserves). See [Scaffold-HBAR](https://github.com/hedera-dev/scaffold-hbar), [Hedera Mirror Node](https://docs.hedera.com/hedera/sdks-and-apis/rest-api) and [the bounty brief](https://hedera.com/blog/scaffold-hbar-template-bounty/).
 
 This repository contains original application and contract code under MIT. It calls SaucerSwap's interfaces and does not vendor or relicense its contract implementation. No Hedera Harness run was used to generate this project; the included tests and CI are the validation tools.
+
+## Optional Cloudflare deployment
+
+Live UI: **https://exitcheck.kiwiprotocol.workers.dev**
+
+The web app can run on Cloudflare Workers through OpenNext. Use Node 22 or later for the Cloudflare deployment tools. The public deployment only reads accounts and verifies reports; publishing remains in the local CLI. No Hedera signing key is required or should be uploaded.
+
+From the repository root:
+
+```sh
+npm run build:cloudflare -w @exitcheck/web
+npm run preview:cloudflare -w @exitcheck/web
+# After checking the preview:
+npm run deploy:cloudflare -w @exitcheck/web
+```
+
+Sign in with Wrangler and set your own account ID and Worker name in `packages/nextjs/wrangler.jsonc` before deploying a scaffolded copy. The preview uses the Workers runtime rather than the Next.js development server. Live checks depend on public Hedera Mirror Node and JSON-RPC availability and never substitute synthetic balances.
