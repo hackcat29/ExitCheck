@@ -28,4 +28,4 @@ The submit-key-protected HCS topic is the primary native-service demonstration. 
 
 Add new market adapters in `packages/core/src/` with explicit supported networks and provenance. Test upstream error handling, fee assumptions, decimals and shared liquidity before enabling an adapter. Live association records must be paginated and JSON integer values preserved without precision loss. Keep network URL inputs server-configured, not user-controlled request values.
 
-Update README methodology, schema version, verifier and tests together when report meaning changes. Keep default demo runnable without secrets, accounts, remote fonts or data providers.
+Update README methodology, schema version, verifier and tests together when report meaning changes. Keep internal fixtures runnable without secrets or data providers. The web app reads real accounts only; public reads require no signing key.

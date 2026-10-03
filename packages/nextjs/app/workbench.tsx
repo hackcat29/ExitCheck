@@ -10,11 +10,11 @@ type Verification = {
   hcs?: { matches: boolean; mirrorUrl: string; payerAccountId: string };
 };
 const initial: AnalysisRequest = {
-  mode: 'demo',
+  mode: 'live',
   network: 'testnet',
   accountId: '0.0.8348691',
   payoutTokenId: '0.0.1183558',
-  obligation: '5000',
+  obligation: '100',
   hbarReserve: '10',
   slippageBps: 100,
   maxImpactBps: 1500,
@@ -113,11 +113,7 @@ export default function Workbench() {
       setVerifying(false);
     }
   }
-  const cli =
-    form.mode === 'demo'
-      ? `npm run report -- --obligation ${form.obligation} --liquidity-bps ${form.liquidityBps} --out reports/check.json`
-      : `npm run report -- --live --network ${form.network} --account ${form.accountId} --payout ${form.payoutTokenId} --obligation ${form.obligation} --hbar-reserve ${form.hbarReserve} --out reports/check.json`;
-  const cliCommand = `${cli} --slippage-bps ${form.slippageBps} --max-impact-bps ${form.maxImpactBps}${form.mode === 'live' ? ` --liquidity-bps ${form.liquidityBps}` : ''}`;
+  const cliCommand = `npm run report -- --live --network ${form.network} --account ${form.accountId} --payout ${form.payoutTokenId} --obligation ${form.obligation} --hbar-reserve ${form.hbarReserve} --out reports/check.json --slippage-bps ${form.slippageBps} --max-impact-bps ${form.maxImpactBps} --liquidity-bps ${form.liquidityBps}`;
   return (
     <main>
       <header>
@@ -164,76 +160,48 @@ export default function Workbench() {
               }}
             >
               <label>
-                Data source
+                Network
                 <select
-                  value={form.mode}
+                  aria-label="Network"
+                  value={form.network}
                   onChange={(e) => {
-                    update('mode', e.target.value as 'demo' | 'live');
+                    update('network', e.target.value as 'testnet' | 'mainnet');
                     update(
-                      'obligation',
-                      e.target.value === 'live' ? '100' : '5000',
+                      'payoutTokenId',
+                      e.target.value === 'testnet'
+                        ? '0.0.1183558'
+                        : '0.0.456858',
                     );
                   }}
                 >
-                  <option value="demo">Example balances (synthetic)</option>
-                  <option value="live">Read a Hedera account</option>
+                  <option value="testnet">Hedera testnet</option>
+                  <option value="mainnet">Hedera mainnet</option>
                 </select>
               </label>
-              {form.mode === 'demo' ? (
-                <p className="hint">
-                  The example pays in USDC. It includes HBAR, SAUCE and a token
-                  excluded because of custom fees. No account or key is needed.
-                </p>
-              ) : (
-                <>
-                  <label>
-                    Network
-                    <select
-                      aria-label="Network"
-                      value={form.network}
-                      onChange={(e) => {
-                        update(
-                          'network',
-                          e.target.value as 'testnet' | 'mainnet',
-                        );
-                        update(
-                          'payoutTokenId',
-                          e.target.value === 'testnet'
-                            ? '0.0.1183558'
-                            : '0.0.456858',
-                        );
-                      }}
-                    >
-                      <option value="testnet">Hedera testnet</option>
-                      <option value="mainnet">Hedera mainnet</option>
-                    </select>
-                  </label>
-                  <label>
-                    Account ID
-                    <input
-                      aria-label="Account ID"
-                      value={form.accountId}
-                      onChange={(e) => update('accountId', e.target.value)}
-                      required
-                      pattern="0\.0\.[0-9]+"
-                    />
-                  </label>
-                  <label>
-                    Payment token ID
-                    <input
-                      aria-label="Payment token ID"
-                      value={form.payoutTokenId}
-                      onChange={(e) => update('payoutTokenId', e.target.value)}
-                      required
-                      pattern="0\.0\.[0-9]+"
-                    />
-                  </label>
-                  <p className="hint">
-                    Testnet example: SAUCE is 0.0.1183558. The account is read
-                    without a wallet or private key.
-                  </p>
-                </>
-              )}
+              <label>
+                Account ID
+                <input
+                  aria-label="Account ID"
+                  value={form.accountId}
+                  onChange={(e) => update('accountId', e.target.value)}
+                  required
+                  pattern="0\.0\.[0-9]+"
+                />
+              </label>
+              <label>
+                Payment token ID
+                <input
+                  aria-label="Payment token ID"
+                  value={form.payoutTokenId}
+                  onChange={(e) => update('payoutTokenId', e.target.value)}
+                  required
+                  pattern="0\.0\.[0-9]+"
+                />
+              </label>
+              <p className="hint">
+                SAUCE on testnet is 0.0.1183558. The account is read without a
+                wallet or private key.
+              </p>
               <label>
                 Payment amount
                 <input
@@ -245,8 +213,7 @@ export default function Workbench() {
                   pattern="(0|[1-9][0-9]*)(\.[0-9]+)?"
                 />
                 <small>
-                  In units of the payment token. Example: 5000 means 5,000 USDC
-                  in example mode.
+                  In units of the payment token. For SAUCE, 100 means 100 SAUCE.
                 </small>
               </label>
               <details>
@@ -260,8 +227,7 @@ export default function Workbench() {
                       onChange={(e) => update('hbarReserve', e.target.value)}
                     />
                     <small>
-                      Used when reading a live account. The example keeps 10
-                      HBAR.
+                      This HBAR is kept out of the conversion estimate for fees.
                     </small>
                   </label>
                   <label>
@@ -343,9 +309,9 @@ export default function Workbench() {
               <div className="empty">
                 <h3>No report yet.</h3>
                 <p>
-                  Run the example to see which balances can contribute to a
-                  5,000 USDC payment. Then change the payment to 1,000 and run
-                  it again.
+                  Run a check to read the public account balances and estimate
+                  whether they can cover your payment. No wallet or private key
+                  is needed.
                 </p>
               </div>
             ) : (
@@ -361,9 +327,7 @@ export default function Workbench() {
                   }
                 >
                   <span className="result-source">
-                    {snapshot.mode === 'demo'
-                      ? 'SYNTHETIC EXAMPLE'
-                      : `LIVE READ · ${snapshot.network.toUpperCase()}`}
+                    {`LIVE READ · ${snapshot.network.toUpperCase()}`}
                   </span>
                   <h3>
                     {r.status === 'covered'
@@ -487,9 +451,7 @@ export default function Workbench() {
                 <details>
                   <summary>Raw report and source details</summary>
                   <p>
-                    {snapshot.mode === 'demo'
-                      ? 'Example data; no network observation was made.'
-                      : `Account ${snapshot.accountId} · EVM block ${snapshot.blockNumber} · observed ${snapshot.observedAt}`}
+                    {`Account ${snapshot.accountId} · EVM block ${snapshot.blockNumber} · observed ${snapshot.observedAt}`}
                   </p>
                   <p>
                     Observation expires: {snapshot.expiresAt}. A report hash
@@ -646,13 +608,7 @@ export default function Workbench() {
               'git clone https://github.com/UncleTom29/ExitCheck.git\ncd ExitCheck\nnpm ci\nnpm run check'
             }
           </pre>
-          <h3>2. Create and verify an example report</h3>
-          <pre>
-            {
-              'npm run report -- --obligation 5000 --out reports/example.json\nnpm run verify -- --file reports/example.json'
-            }
-          </pre>
-          <h3>3. Read actual testnet balances and a SaucerSwap pool</h3>
+          <h3>2. Read actual testnet balances and a SaucerSwap pool</h3>
           <pre>
             {
               'npm run report -- --live --network testnet --account 0.0.8348691 --payout 0.0.1183558 --obligation 100 --out reports/testnet.json'
@@ -662,7 +618,7 @@ export default function Workbench() {
             No signing key is needed for a live read. Account balances and pool
             reserves are public.
           </p>
-          <h3>4. Publish a report hash on Hedera testnet</h3>
+          <h3>3. Publish a report hash on Hedera testnet</h3>
           <p>
             Copy <code>.env.example</code> to <code>.env</code> and configure a
             funded testnet account locally. The key is used only by the
@@ -679,7 +635,7 @@ export default function Workbench() {
             check the success status. For later reports, set{' '}
             <code>HCS_TOPIC_ID</code> to reuse your topic.
           </p>
-          <h3>5. Verify the actual message</h3>
+          <h3>4. Verify the actual message</h3>
           <pre>
             {
               'npm run verify -- --file evidence/published-report.json --topic YOUR_TOPIC --sequence YOUR_SEQUENCE --payer YOUR_ACCOUNT'

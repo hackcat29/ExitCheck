@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { createReport, envelope, requestSchema } from '@exitcheck/core';
+import { demoSnapshot } from '@exitcheck/core/demo';
 const base = process.env.EXITCHECK_URL ?? 'http://127.0.0.1:3000';
 for (const route of ['/', '/api/health']) {
   const r = await fetch(base + route);
@@ -9,10 +11,15 @@ const r = await fetch(base + '/api/analyze', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ mode: 'demo', obligation: '5000' }),
 });
-assert.equal(r.status, 200);
-const result = await r.json();
-assert.equal(result.envelope.report.snapshot.mode, 'demo');
-assert.equal(result.stress.length, 4);
+assert.equal(r.status, 400);
+const result = {
+  envelope: envelope(
+    createReport(
+      demoSnapshot(),
+      requestSchema.parse({ mode: 'demo', obligation: '5000' }),
+    ),
+  ),
+};
 const verify = await fetch(base + '/api/verify', {
   method: 'POST',
   body: JSON.stringify(result.envelope),
@@ -28,7 +35,7 @@ const invalid = await fetch(base + '/api/analyze', {
   method: 'POST',
   body: JSON.stringify({ mode: 'demo', obligation: '0' }),
 });
-assert.equal(invalid.status, 422);
+assert.equal(invalid.status, 400);
 console.log(
   'Core routes, analysis, verification and invalid-input smoke checks passed.',
 );

@@ -45,7 +45,7 @@ npm run report -- --obligation 5000 --liquidity-bps 2500 --out reports/stressed.
 
 `2500` basis points means 25% of the original pool reserves remain. The report retains the assumptions and excluded-balance explanations. Run `npm run report -- --help` for all options.
 
-## 3. Use the local web example
+## 3. Check real accounts in the local web app
 
 ```sh
 npm run dev
@@ -53,7 +53,7 @@ npm run dev
 
 Open **http://localhost:3000**. The interface has three tools:
 
-- **Check:** choose example balances or a live account, enter the payment, then run the analysis. Inspect each balance's contribution. Optional conversion assumptions let you change price impact, slippage and remaining liquidity.
+- **Check:** read a real Hedera account, enter the payment, then run the analysis. Testnet is selected by default with a prefilled public account and SAUCE token. Inspect each balance's contribution. Optional conversion assumptions let you change price impact, slippage and remaining liquidity.
 - **Verify:** import a saved JSON report, verify its hash and recalculated results, and optionally compare it with an actual testnet HCS message.
 - **Setup:** the clone, report, publication and verification commands in one place.
 

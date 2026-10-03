@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { createReport, envelope, requestSchema } from '@exitcheck/core';
-import { demoSnapshot } from '@exitcheck/core/demo';
 import { liveSnapshot } from '@exitcheck/core/server';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -19,8 +18,16 @@ export async function POST(request: Request) {
         },
         { status: 400 },
       );
-    const req = parsed.data,
-      snapshot = req.mode === 'demo' ? demoSnapshot() : await liveSnapshot(req);
+    const req = parsed.data;
+    if (req.mode !== 'live')
+      return NextResponse.json(
+        {
+          error:
+            'Choose a real Hedera account. Synthetic analysis is not available in the web app.',
+        },
+        { status: 400 },
+      );
+    const snapshot = await liveSnapshot(req);
     const { createReport: calculate } = await import('@exitcheck/core');
     const report = createReport(snapshot, req);
     const ladder = [2500, 5000, 7500, 10000].map((liquidationBps) => ({
@@ -42,7 +49,7 @@ export async function POST(request: Request) {
         message,
       )
         ? message
-        : 'Live sources could not be read. Retry, check the account and payout IDs, or run the demo. No cached result was substituted.';
+        : 'Live sources could not be read. Retry, check the account and payout IDs, try again later. No cached result was substituted.';
     return NextResponse.json({ error: safe }, { status: 422 });
   }
 }
