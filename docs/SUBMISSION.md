@@ -1,13 +1,13 @@
 # Scaffold-HBAR submission checklist
 
-- [ ] Public MIT repository with credited author: `UncleTom29/ExitCheck`.
-- [ ] Scaffold command tested against the published public repository.
-- [ ] Fresh scaffold install, lint, typecheck, tests and build pass.
-- [ ] App boots; `/`, `/api/health`, `/api/analyze`, `/api/verify` pass smoke checks.
-- [ ] SaucerSwap live observation documented; exact network and block retained.
-- [ ] Real testnet transaction receipt and readable HashScan/Mirror Node evidence.
-- [ ] No `.env` or signing secrets committed.
-- [ ] README, AGENTS and template manifest present in source repo.
+- [x] Public MIT repository with credited author: `UncleTom29/ExitCheck`.
+- [x] Scaffold command tested against the published public repository.
+- [x] Fresh scaffold install, lint, typecheck, tests and build pass.
+- [x] App boots; `/`, `/api/health`, `/api/analyze`, `/api/verify` pass smoke checks.
+- [x] SaucerSwap live observation documented; exact network and block retained.
+- [x] Real testnet transaction receipt and readable HashScan/Mirror Node evidence.
+- [x] No `.env` or signing secrets committed.
+- [x] README, AGENTS and template manifest present in source repo.
 - [ ] Required developer-experience survey completed.
 - [ ] Repository and testnet evidence URLs entered in the submission form.
 
@@ -28,4 +28,4 @@ ExitCheck is a reusable liquidity-aware Hedera treasury template. It checks whet
 
 Harness was not used. Original code is MIT licensed. This is an analysis template; no treasury trades are executed.
 
-Update this checklist with actual validation and evidence. Never substitute an invented transaction ID or a synthetic balance observation for network evidence.
+Validation and public transaction evidence are recorded in [VALIDATION.md](VALIDATION.md) and [EVIDENCE.md](EVIDENCE.md). The developer-experience survey and final submission remain for the entrant.
