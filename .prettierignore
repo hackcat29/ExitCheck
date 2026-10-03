@@ -11,3 +11,8 @@ package-lock.json
 test-results
 playwright-report
 **/next-env.d.ts
+
+# Cloudflare-generated declarations and build output
+**/cloudflare-env.d.ts
+.open-next
+.wrangler
