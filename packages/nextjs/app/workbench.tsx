@@ -118,7 +118,8 @@ export default function Workbench() {
     <main>
       <header>
         <div>
-          <a className="wordmark" href="/">
+          <a className="wordmark" href="/" aria-label="ExitCheck home">
+            <img src="/exitcheck-mark.svg" width="36" height="36" alt="" />
             ExitCheck
           </a>
           <span className="tag">Hedera developer template</span>

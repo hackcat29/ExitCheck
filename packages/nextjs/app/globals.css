@@ -15,7 +15,7 @@ main {
   padding: 0 32px;
 }
 a {
-  color: #2359a6;
+  color: #245d78;
   text-underline-offset: 3px;
 }
 header {
@@ -32,6 +32,10 @@ header > div {
   gap: 16px;
 }
 .wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.6px;
   font-size: 23px;
   font-weight: 700;
   color: #202124;
@@ -85,7 +89,7 @@ nav button {
 }
 nav button[aria-pressed='true'] {
   color: #202124;
-  border-bottom-color: #202124;
+  border-bottom-color: #26735f;
   font-weight: 700;
 }
 button,
@@ -110,12 +114,12 @@ button:disabled {
   cursor: wait;
 }
 .primary {
-  background: #2458a5;
+  background: #172b3a;
   color: #fff;
-  border-color: #2458a5;
+  border-color: #172b3a;
 }
 .primary:hover {
-  background: #19447f;
+  background: #244354;
 }
 label {
   display: block;
@@ -152,13 +156,16 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus-visible {
-  outline: 2px solid #2458a5;
+  outline: 2px solid #172b3a;
   outline-offset: 2px;
 }
 .check-layout {
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr);
   gap: 40px;
+}
+.check-layout > section {
+  min-width: 0;
 }
 .form-section {
   padding-right: 28px;
