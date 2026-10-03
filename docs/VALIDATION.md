@@ -3,7 +3,7 @@
 Validated on October 3, 2026.
 
 - Public repository: https://github.com/UncleTom29/ExitCheck
-- Successful CI: https://github.com/UncleTom29/ExitCheck/actions/runs/37088966019
+- Successful CI: https://github.com/UncleTom29/ExitCheck/actions/runs/37123552302
 - 30 core tests, 4 contract tests and 3 browser tests passed.
 - Formatting, manifest validation, lint, type checks and production build passed.
 - HTTP smoke checks cover the app, health, analysis, report verification and tampering rejection.
@@ -23,3 +23,9 @@ npm run dev
 ```
 
 The shipped integration supports validated direct SaucerSwap V1 routes. Synthetic demonstrations, live observations and historical commitments are explicitly distinguished. This template does not execute treasury trades.
+
+## Developer workflow revision
+
+Public revision `aeef3c5` was cloned into a fresh local directory. `npm ci` and `npm run check` passed there. The revised repository also initialized through Scaffold-HBAR with npm flag forwarding (`-- --template`). All three browser tests and HTTP smoke checks passed locally, and the public CI run linked above passed.
+
+The developer demo records actual local commands and app interactions, followed by a fresh live testnet report, a successful HCS commitment, independent comparison with the actual Mirror Node message and HashScan inspection. Only the installation wait is shortened and labeled.

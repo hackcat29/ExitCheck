@@ -25,3 +25,12 @@ Verification was performed against the actual Mirror Node message: the digest an
 An earlier setup commitment appears as sequence 1 on the same topic. Sequence 2 is the preferred submission evidence because its report includes validated SaucerSwap liquidity.
 
 Only public report data and receipts are committed. The local testnet signing key and environment file are excluded from Git.
+
+## Transaction shown in the developer demo
+
+The revised developer demo records a fresh public clone, local setup, a live testnet observation, HCS publication and explorer inspection. Its actual report commitment transaction is:
+
+- [HashScan: successful HCS submit message](https://hashscan.io/testnet/transaction/0.0.8348691@1791031602.579918353)
+- [Actual Mirror Node message: topic 0.0.10835164, sequence 3](https://testnet.mirrornode.hedera.com/api/v1/topics/0.0.10835164/messages/3)
+
+The new full report and receipt accompany the local demo deliverable. This documentation adds only links to the already-public transaction and message; no new account balance report is added to this repository. Sequence 2 above remains the self-contained public report-verification example.
