@@ -18,7 +18,7 @@ Independently verify:
 npm run verify -- --file docs/evidence/published-report.json --topic 0.0.10835164 --sequence 2 --payer 0.0.8348691
 ```
 
-Or import the published report in the dashboard's Verify report screen, expand the optional HCS check, and supply the topic, sequence and payer above.
+Or import the published report in the local web example’s Verify tool, expand the optional HCS check, and supply the topic, sequence and payer above.
 
 Verification was performed against the actual Mirror Node message: the digest and all commitment metadata matched. The original two-minute observation window expires; this is retained historical evidence, not a current estimate. An expired report still has verifiable integrity and can match its HCS commitment. The report's payout-token association warning remains explicit, and it does not certify the ability to execute the conversion.
 

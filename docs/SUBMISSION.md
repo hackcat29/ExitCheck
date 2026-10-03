@@ -13,14 +13,14 @@
 
 ## Judge walkthrough
 
-1. Scaffold, install and boot. No credentials are needed for the synthetic demonstration.
-2. Observe a spot-valued treasury whose supported minimum proceeds cannot cover a 5,000-unit payout.
-3. Reduce the obligation to 1,000. The same inventory now covers it.
-4. Inspect the price-impact cap, unsold inventory, custom-fee exclusion and retained HBAR reserve.
-5. Reduce liquidity, apply the scenario and compare the inventory liquidation ladder.
-6. Switch to a real Hedera account for on-chain pool/router and HTS observations.
-7. Export the report, verify it, alter a result and demonstrate rejection.
-8. Show the actual HCS topic message and compare its full commitment using the independent verifier.
+1. Clone the public repository, install dependencies and run checks.
+2. Generate an example report from the CLI and verify it.
+3. Open the local web example, run a 5,000 USDC payment check, then change the amount to 1,000 and rerun.
+4. Inspect each balance's contribution and its exclusion or conversion limit.
+5. Export, verify and alter a report to demonstrate rejection.
+6. Generate a fresh live testnet report for a public account and SAUCE payout.
+7. Publish its commitment with the local CLI; keep the signer key off screen.
+8. Open the actual transaction in HashScan and compare its HCS message with the report.
 
 ## Suggested description
 

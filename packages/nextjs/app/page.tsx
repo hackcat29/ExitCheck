@@ -1,4 +1,4 @@
-import Dashboard from './dashboard';
+import Workbench from './workbench';
 export default function Page() {
-  return <Dashboard />;
+  return <Workbench />;
 }

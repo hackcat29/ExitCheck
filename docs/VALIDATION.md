@@ -4,10 +4,10 @@ Validated on October 3, 2026.
 
 - Public repository: https://github.com/UncleTom29/ExitCheck
 - Successful CI: https://github.com/UncleTom29/ExitCheck/actions/runs/37088966019
-- 30 core tests, 4 contract tests and 2 browser tests passed.
+- 30 core tests, 4 contract tests and 3 browser tests passed.
 - Formatting, manifest validation, lint, type checks and production build passed.
 - HTTP smoke checks cover the app, health, analysis, report verification and tampering rejection.
-- Desktop and mobile browser checks cover the treasury scenario and report verification.
+- Desktop and mobile browser checks cover payment changes, export blocking for changed inputs, report verification, liquidity assumptions and network-specific live input fields.
 - Published Scaffold-HBAR CLI 0.4.1 generated a fresh project from the public repository. Fresh dependency installation, lint, type checks, 34 core/contract tests and production build passed.
 - Native testnet HCS evidence was independently verified against Mirror Node; see [EVIDENCE.md](EVIDENCE.md). The historical observation is expired and is not a current execution quote.
 - Local environment files and signing credentials are ignored and excluded from the Git archive.

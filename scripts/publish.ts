@@ -13,6 +13,21 @@ import {
 } from '../packages/core/src/index';
 import { commitmentSchema } from '../packages/core/src/schema';
 import { argument, loadEnv } from './env';
+if (process.argv.includes('--help')) {
+  console.log(`Publish a report commitment on Hedera TESTNET only.
+Configure HEDERA_ACCOUNT_ID, HEDERA_PRIVATE_KEY and HEDERA_KEY_TYPE in local .env.
+Set HCS_TOPIC_ID to reuse an authorized topic, or use --create-topic.
+
+npm run hcs:publish -- --file reports/check.json --create-topic
+  --file PATH        Report to publish (default: reports/report.json)
+  --create-topic     Create a submit-key-protected topic if HCS_TOPIC_ID is unset
+  --allow-expired    Explicitly archive an old report; does not make it fresh
+
+Writes evidence/hcs-receipt.json and evidence/published-report.json.
+Prints public transaction, HashScan and Mirror Node links. Fee cap: 2 HBAR per transaction.
+Never record or commit .env.`);
+  process.exit(0);
+}
 loadEnv();
 let client: Client | undefined;
 try {

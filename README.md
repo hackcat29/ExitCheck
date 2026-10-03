@@ -1,39 +1,97 @@
 # ExitCheck
 
-**Can this treasury actually cover its next payout?**
+A Hedera developer template for checking whether account balances can cover a payment through **direct SaucerSwap V1 pools**. Generate a JSON report, verify its calculations, and publish its hash to Hedera Consensus Service on testnet. No trades are sent.
 
-ExitCheck is a Scaffold-HBAR community template for liquidity-aware treasury analysis. It combines Hedera balances and HTS transfer restrictions with real SaucerSwap V1 pool reserves and router quotes, then estimates payout coverage under an explicit execution policy. Export a reproducible report and publish its digest to Hedera Consensus Service on testnet.
+The CLI is the primary workflow. A small Next.js example exposes the same analysis and verification functions. It is a working reference interface you can replace in your own application.
 
-![ExitCheck dashboard](docs/dashboard.png)
+## 1. Clone and install
 
-A balance marked at the pool's spot ratio can look healthy while its actual liquidation proceeds fall far below the next obligation. ExitCheck makes that difference visible.
-
-## Start in two minutes
-
-Requirements: Node **20.18.3 or later**, npm, Git. Node 22 or 24 LTS is recommended. No wallet, faucet, API key or environment file is required for the demonstration.
+Requirements: Node **20.18.3 or later**, npm and Git. Node 22 LTS is used in CI.
 
 ```sh
+git clone https://github.com/UncleTom29/ExitCheck.git
+cd ExitCheck
 npm ci
-npm run dev
+npm run check
 ```
 
-Open **http://localhost:3000**. The initial treasury is explicitly synthetic. It shows a thin SAUCE pool, a usable HBAR balance, existing USDC, and an excluded custom-fee token. Try an obligation of `1000`, then `5000`. Move remaining liquidity to 25% and apply the scenario. Export a report, open **Verify report**, and check it independently.
+No account, wallet, key or `.env` file is needed for the example or public network reads.
 
-### Scaffold this template
-
-After publication:
+### Or create a project with Scaffold-HBAR
 
 ```sh
-npm create scaffold-hbar@latest -- exitcheck --template UncleTom29/ExitCheck --package-manager npm --solidity-framework hardhat --frontend nextjs-app --skip-hedera-skills
+npm create scaffold-hbar@latest exitcheck -- --template UncleTom29/ExitCheck --package-manager npm --solidity-framework hardhat --frontend nextjs-app --skip-hedera-skills --skip-install --yes
 cd exitcheck
+npm ci
+```
+
+This template supports Next.js, Hardhat and npm. The generator consumes and removes `template.json`; the manifest stays in the source repository. Root `.env.example` is supplied by this template.
+
+## 2. Generate and verify an example
+
+```sh
+npm run report -- --obligation 5000 --out reports/example.json
+npm run verify -- --file reports/example.json
+```
+
+The CLI prints the payment token, amount needed, estimated proceeds, gap, excluded balance count and saved file path. Example balances are synthetic: about 2,607 USDC in estimated proceeds cannot cover a 5,000 USDC payment. Some inventory is excluded, so the result is `incomplete`, rather than a declaration that the whole treasury is insolvent.
+
+Try a smaller payment and a liquidity stress case:
+
+```sh
+npm run report -- --obligation 1000 --out reports/smaller-payment.json
+npm run report -- --obligation 5000 --liquidity-bps 2500 --out reports/stressed.json
+```
+
+`2500` basis points means 25% of the original pool reserves remain. The report retains the assumptions and excluded-balance explanations. Run `npm run report -- --help` for all options.
+
+## 3. Use the local web example
+
+```sh
 npm run dev
 ```
 
-The manifest constrains this template to Next.js, Hardhat and npm. The upstream CLI consumes and removes `template.json` after generation; its presence is required in this source repository, not in the generated app. A root `.env.example` is included manually, so the CLI does not regenerate or strip its configuration defaults.
+Open **http://localhost:3000**. The interface has three tools:
+
+- **Check:** choose example balances or a live account, enter the payment, then run the analysis. Inspect each balance's contribution. Optional conversion assumptions let you change price impact, slippage and remaining liquidity.
+- **Verify:** import a saved JSON report, verify its hash and recalculated results, and optionally compare it with an actual testnet HCS message.
+- **Setup:** the clone, report, publication and verification commands in one place.
+
+Changing inputs marks the previous result as stale and disables export until the check runs again. No signing key belongs in this page.
+
+![ExitCheck local check form](docs/workbench.png)
+
+## 4. Read real testnet data
+
+```sh
+npm run report -- --live --network testnet --account 0.0.8348691 --payout 0.0.1183558 --obligation 100 --out reports/testnet.json
+```
+
+This public example account and SAUCE token are on Hedera testnet. Results depend on actual balances and pool reserves at the observation time. A failure stays a failure; the adapter never substitutes example data for a failed network read.
+
+## 5. Publish and inspect a real testnet transaction
+
+Copy `.env.example` to `.env` and configure your funded testnet account and key locally. Use a private editor or secret manager; do not print the file or include it in a screen recording. `.env` is ignored by Git.
+
+```sh
+npm run hcs:publish -- --file reports/testnet.json --create-topic
+```
+
+Only this CLI signs a transaction. It prints the receipt, transaction ID, HashScan URL and Mirror Node URL and writes `evidence/hcs-receipt.json` plus the exact published report. Open the printed **HashScan URL** and inspect `SUCCESS`, payer and topic details. Save the topic ID in `HCS_TOPIC_ID` to reuse it; `--create-topic` creates a new one only when that variable is unset.
+
+Reports expire after two minutes. Generate a fresh live report immediately before publishing. A live read does not send funds or execute a swap; publication submits the small report commitment through HCS.
+
+## 6. Compare the report with the actual HCS message
+
+```sh
+npm run verify -- --file evidence/published-report.json --topic YOUR_TOPIC --sequence YOUR_SEQUENCE --payer YOUR_ACCOUNT
+```
+
+Use the identifiers printed by publication. The verifier checks the entire commitment and expected payer against Mirror Node. Existing public evidence and explorer links are in [EVIDENCE.md](docs/EVIDENCE.md). Historical reports can pass integrity checks after expiration, but cannot be treated as current quotes.
 
 ## Live analysis
 
-Select **Live account**, enter a treasury account ID, the fungible HTS payout token ID, obligation amount in that token's units and an HBAR reserve, then run the check.
+Select **Read a Hedera account** in the Check tool, choose the network, enter the account ID, payment token ID and payment amount, then run the check.
 
 Mainnet examples: USDC `0.0.456858`, SAUCE `0.0.731861`, WHBAR `0.0.1456986`. Testnet token IDs differ; testnet WHBAR is `0.0.15058`, SAUCE is `0.0.1183558`. A mainnet USDC ID must not be assumed to represent USDC on testnet. Token symbol and decimals are read from Mirror Node, not hard-coded into live calculations.
 
@@ -58,7 +116,7 @@ Public Mirror Node and Hashio endpoints work by default. The `.env` file is read
 | `HCS_TOPIC_ID`           | Existing topic the signer may submit to      | Optional with `--create-topic` |
 | `HEDERA_EVM_PRIVATE_KEY` | Hex EVM key for optional contract deployment | Contract only                  |
 
-Use a testnet-only signer. Configure it locally in your secret manager or git-ignored `.env`. Private keys never belong in the dashboard, report, evidence file or repository.
+Use a testnet-only signer. Configure it locally in your secret manager or git-ignored `.env`. Private keys never belong in the web example, report, evidence file or repository.
 
 ## How coverage works
 
@@ -89,7 +147,7 @@ Remaining liquidity scales **both V1 reserves by the same factor**, modeling pro
 - `shortfall`: the examined inventory has a modeled gap, without known unexamined/excluded positive holdings.
 - `incomplete`: the supported inventory has a gap and other holdings or observations were excluded/unavailable. Additional routes might close it.
 
-The dashboard labels a gap in modeled proceeds; it does not declare an entire treasury insolvent.
+The web example labels a gap in modeled proceeds; it does not declare an entire treasury insolvent.
 
 ## Hedera testnet evidence
 
@@ -139,7 +197,7 @@ Hardhat uses the pinned local `solc` package, so compilation does not download c
 ## Architecture
 
 ```text
-Next.js dashboard / CLI report
+Next.js web example / CLI report
          │
          ├── Mirror Node ── HBAR balances + HTS flags and balances
          └── Hashio RPC ─── SaucerSwap V1 factory, pair, router (one block)
@@ -157,7 +215,7 @@ Next.js dashboard / CLI report
 
 ```text
 packages/core      schema, integer math, demo fixture, live adapter, tests
-packages/nextjs    dashboard, stress UI, HTTP analysis and verification routes
+packages/nextjs    web example, check form, HTTP analysis and verification routes
 packages/hardhat   optional Solidity registry, offline compiler, contract tests
 scripts           report generation, HCS publication, independent verification
 ```
@@ -201,7 +259,7 @@ Tests cover rounding, large integer balances, fee calculation, impact caps, prop
 
 ### Browser tests
 
-After `npm run build`, install a Playwright browser (`npx playwright install chromium`) and run `npm run e2e`. On a workstation with Chrome installed, `PLAYWRIGHT_CHANNEL=chrome npm run e2e` uses an isolated Chrome test session. Tests cover coverage changes, export, verification, altered-report rejection, stress controls and mobile layout.
+After `npm run build`, install a Playwright browser (`npx playwright install chromium`) and run `npm run e2e`. On a workstation with Chrome installed, `PLAYWRIGHT_CHANNEL=chrome npm run e2e` uses an isolated Chrome test session. Tests cover payment changes, stale-result export prevention, file export, verification, altered-report rejection, liquidity assumptions, mobile layout and network-specific live inputs.
 
 ## Known boundaries
 

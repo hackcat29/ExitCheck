@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 export const metadata: Metadata = {
-  title: 'ExitCheck — Is your treasury ready to pay?',
+  title: 'ExitCheck — Hedera balance checks',
   description:
-    'Liquidity-aware treasury coverage on Hedera. Inspect real routes, stress liquidity and verify report commitments.',
+    'Read Hedera balances, estimate direct SaucerSwap conversions and verify saved reports.',
 };
 export default function RootLayout({
   children,

@@ -22,11 +22,11 @@
           "title": "Start ExitCheck",
           "steps": [
             {
-              "label": "Run the dashboard",
+              "label": "Start the local web example",
               "command": "{run:dev}"
             },
             {
-              "label": "Open the demo",
+              "label": "Open the check form",
               "url": "http://localhost:3000"
             },
             {
