@@ -1,0 +1,61 @@
+{
+  "name": "exitcheck",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.18.3"
+  },
+  "workspaces": [
+    "packages/core",
+    "packages/nextjs",
+    "packages/hardhat"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @exitcheck/web",
+    "start": "npm run start -w @exitcheck/web",
+    "build": "npm run build -w @exitcheck/web",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p packages/core/tsconfig.json && tsc --noEmit -p packages/nextjs/tsconfig.json",
+    "test": "vitest run",
+    "check": "npm run lint && npm run typecheck && npm test && npm run contracts:test && npm run build",
+    "report": "tsx scripts/report.ts",
+    "verify": "tsx scripts/verify.ts",
+    "hcs:publish": "tsx scripts/publish.ts",
+    "contracts:test": "npm run test -w @exitcheck/contracts",
+    "hardhat:compile": "npm run compile -w @exitcheck/contracts",
+    "hardhat:deploy": "npm run deploy -w @exitcheck/contracts",
+    "smoke": "tsx scripts/smoke.ts",
+    "template:check": "tsx scripts/check-template.ts",
+    "e2e": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "^1.56.0",
+    "@types/json-bigint": "^1.0.4",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.39.0",
+    "prettier": "^3.9.9",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^3.2.0"
+  },
+  "dependencies": {
+    "@hashgraph/sdk": "2.81.0",
+    "ethers": "^6.15.0",
+    "zod": "^3.25.0"
+  },
+  "overrides": {
+    "protobufjs": "^7.6.5",
+    "@grpc/grpc-js": "^1.14.4",
+    "undici": "^6.28.1",
+    "adm-zip": "^0.6.1",
+    "tmp": "^0.2.6",
+    "@fastify/busboy": "^3.2.1",
+    "serialize-javascript": "^7.0.5"
+  },
+  "type": "module"
+}

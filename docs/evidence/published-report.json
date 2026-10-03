@@ -1,0 +1,120 @@
+{
+  "report": {
+    "schema": "exitcheck.report.v1",
+    "snapshot": {
+      "mode": "live",
+      "network": "testnet",
+      "accountId": "0.0.8348691",
+      "observedAt": "2026-10-03T02:02:54.552Z",
+      "expiresAt": "2026-10-03T02:04:54.552Z",
+      "blockNumber": 41285926,
+      "blockHash": "0x366688d1837e6fd06038f2dda7a789098b1fa2e8e698720fd65b225a6a0d5202",
+      "balanceTimestamp": "1790992950.902535494",
+      "payout": {
+        "id": "0.0.1183558",
+        "symbol": "SAUCE",
+        "decimals": 6
+      },
+      "whbarTokenId": "0.0.15058",
+      "hbarReserved": "1000000000",
+      "holdings": [
+        {
+          "id": "0.0.8351760",
+          "token": {
+            "id": "0.0.8351760",
+            "symbol": "RSRIGHTS",
+            "decimals": 0
+          },
+          "balance": "2",
+          "kind": "hts",
+          "eligible": false,
+          "exclusion": "Non-fungible tokens are not liquid fungible inventory"
+        },
+        {
+          "id": "HBAR",
+          "token": {
+            "id": "0.0.15058",
+            "symbol": "HBAR",
+            "decimals": 8
+          },
+          "balance": "96738907639",
+          "kind": "native",
+          "eligible": true
+        }
+      ],
+      "pools": [
+        {
+          "address": "0xfE7CC3cEb7b1128bfC3889184E2d5561BF74bfb3",
+          "tokenIn": "0.0.15058",
+          "reserveIn": "7723942321888",
+          "reserveOut": "4189899973075",
+          "feeBps": 30,
+          "routerQuote": "51146295549",
+          "quotedInput": "95738907639"
+        }
+      ],
+      "warnings": [
+        "Payout token is not associated with this account. Association is required before receiving converted funds.",
+        "Balances and token flags are Mirror Node observations; pool reads share one RPC block. These sources are not an atomic portfolio snapshot.",
+        "Coverage is conditional on account control, approvals, token association and execution. Gas, wrap costs, locked funds and other debts are not deducted.",
+        "Liquidity stress scales both V1 reserves equally. It is a modeled LP withdrawal, not a forecast or a V2 liquidity simulation."
+      ],
+      "sources": [
+        "https://testnet.mirrornode.hedera.com/api/v1/accounts/0.0.8348691",
+        "https://testnet.mirrornode.hedera.com/api/v1/accounts/0.0.8348691/tokens",
+        "https://testnet.mirrornode.hedera.com/api/v1/tokens/0.0.1183558",
+        "https://hashscan.io/testnet/contract/0.0.19264",
+        "https://hashscan.io/testnet/contract/0.0.9959"
+      ]
+    },
+    "options": {
+      "obligation": "100",
+      "slippageBps": 100,
+      "maxImpactBps": 1500,
+      "liquidityBps": 10000,
+      "obligationMultiplierBps": 10000,
+      "liquidationBps": 10000
+    },
+    "result": {
+      "obligation": "100000000",
+      "minimumProceeds": "50634832593",
+      "spotValue": "51934158726",
+      "shortfall": "0",
+      "surplus": "50534832593",
+      "coverageBps": 5063483,
+      "status": "covered",
+      "excludedCount": 1,
+      "rows": [
+        {
+          "tokenId": "0.0.15058",
+          "symbol": "HBAR",
+          "decimals": 8,
+          "balance": "95738907639",
+          "sellInput": "95738907639",
+          "unsold": "0",
+          "spotValue": "51934158726",
+          "expectedOutput": "51146295549",
+          "minimumOutput": "50634832593",
+          "impactBps": 123,
+          "poolAddress": "0xfE7CC3cEb7b1128bfC3889184E2d5561BF74bfb3",
+          "state": "quoted"
+        },
+        {
+          "tokenId": "0.0.8351760",
+          "symbol": "RSRIGHTS",
+          "decimals": 0,
+          "balance": "2",
+          "sellInput": "0",
+          "unsold": "2",
+          "spotValue": "0",
+          "expectedOutput": "0",
+          "minimumOutput": "0",
+          "impactBps": 0,
+          "state": "excluded",
+          "reason": "Non-fungible tokens are not liquid fungible inventory"
+        }
+      ]
+    }
+  },
+  "digest": "61d80b40a78434dd5556d3e0d5221a09014e19aff72261ee5371774167e05754"
+}

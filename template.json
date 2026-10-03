@@ -1,0 +1,44 @@
+{
+  "name": "exitcheck",
+  "description": "Liquidity-aware Hedera treasury payout coverage, SaucerSwap V1 direct pools, HTS checks and verifiable HCS commitments.",
+  "version": "1.0.0",
+  "create-scaffold-hbar": {
+    "capabilities": {
+      "frontend": ["nextjs-app"],
+      "solidityFramework": ["hardhat"],
+      "packageManager": ["npm"]
+    },
+    "defaults": {
+      "frontend": "nextjs-app",
+      "solidityFramework": "hardhat",
+      "packageManager": "npm"
+    },
+    "requirements": {
+      "node": ">=20.18.3"
+    },
+    "outro": {
+      "sections": [
+        {
+          "title": "Start ExitCheck",
+          "steps": [
+            {
+              "label": "Run the dashboard",
+              "command": "{run:dev}"
+            },
+            {
+              "label": "Open the demo",
+              "url": "http://localhost:3000"
+            },
+            {
+              "label": "Validate the template",
+              "command": "{run:check}"
+            },
+            {
+              "text": "Read README.md for live analysis and the testnet HCS evidence flow."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

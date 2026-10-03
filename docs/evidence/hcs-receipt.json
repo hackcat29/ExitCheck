@@ -1,0 +1,22 @@
+{
+  "network": "testnet",
+  "operatorAccountId": "0.0.8348691",
+  "topicId": "0.0.10835164",
+  "sequence": "2",
+  "transactionId": "0.0.8348691@1790993047.407401995",
+  "receiptStatus": "SUCCESS",
+  "commitment": {
+    "schema": "exitcheck.commitment.v1",
+    "algorithm": "sha256",
+    "digest": "61d80b40a78434dd5556d3e0d5221a09014e19aff72261ee5371774167e05754",
+    "reportSchema": "exitcheck.report.v1",
+    "sourceNetwork": "testnet",
+    "mode": "live",
+    "observedAt": "2026-10-03T02:02:54.552Z",
+    "expiresAt": "2026-10-03T02:04:54.552Z",
+    "blockNumber": 41285926,
+    "accountId": "0.0.8348691"
+  },
+  "hashscanUrl": "https://hashscan.io/testnet/transaction/0.0.8348691@1790993047.407401995",
+  "mirrorUrl": "https://testnet.mirrornode.hedera.com/api/v1/topics/0.0.10835164/messages/2"
+}

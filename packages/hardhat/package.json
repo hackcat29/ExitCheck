@@ -1,0 +1,15 @@
+{
+  "name": "@exitcheck/contracts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.cjs --network hederaTestnet"
+  },
+  "devDependencies": {
+    "hardhat": "2.29.1",
+    "@nomicfoundation/hardhat-ethers": "^3.1.0",
+    "solc": "0.8.28"
+  }
+}
