@@ -2,8 +2,8 @@
 
 Validated on October 3, 2026.
 
-- Public repository: https://github.com/UncleTom29/ExitCheck
-- Successful CI: https://github.com/UncleTom29/ExitCheck/actions/runs/37123552302
+- Public repository: https://github.com/hackcat29/ExitCheck
+- Historical CI run: `37123552302` on the previous repository; the account is no longer accessible. Current validation runs are listed at https://github.com/hackcat29/ExitCheck/actions.
 - 30 core tests, 4 contract tests and 3 browser tests passed.
 - Formatting, manifest validation, lint, type checks and production build passed.
 - HTTP smoke checks cover the app, health, analysis, report verification and tampering rejection.
@@ -15,7 +15,7 @@ Validated on October 3, 2026.
 ## Reproduce the public scaffold
 
 ```sh
-npm create scaffold-hbar@latest -- exitcheck --template UncleTom29/ExitCheck --package-manager npm --solidity-framework hardhat --frontend nextjs-app --skip-hedera-skills --skip-install --yes
+npm create scaffold-hbar@latest -- exitcheck --template hackcat29/ExitCheck --package-manager npm --solidity-framework hardhat --frontend nextjs-app --skip-hedera-skills --skip-install --yes
 cd exitcheck
 npm ci
 npm run check
@@ -29,3 +29,7 @@ The shipped integration supports validated direct SaucerSwap V1 routes. Syntheti
 Public revision `aeef3c5` was cloned into a fresh local directory. `npm ci` and `npm run check` passed there. The revised repository also initialized through Scaffold-HBAR with npm flag forwarding (`-- --template`). All three browser tests and HTTP smoke checks passed locally, and the public CI run linked above passed.
 
 The developer demo records actual local commands and app interactions, followed by a fresh live testnet report, a successful HCS commitment, independent comparison with the actual Mirror Node message and HashScan inspection. Only the installation wait is shortened and labeled.
+
+## Repository migration — October 11, 2026
+
+ExitCheck now lives at `hackcat29/ExitCheck`. The original Git history, MIT attribution and Hedera transaction evidence are preserved. Installation instructions and web source links use the new repository. October 3 checks above are historical records; new CI runs validate the migrated branch. The Cloudflare URL remains https://exitcheck.kiwiprotocol.workers.dev.
