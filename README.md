@@ -4,6 +4,14 @@ A Hedera developer template for checking whether account balances can cover a pa
 
 The CLI is the primary workflow. A small Next.js example exposes the same analysis and verification functions. It is a working reference interface you can replace in your own application.
 
+## Notice to hackathon reviewers: repository migration
+
+The original GitHub account, **UncleTom29**, which hosted `UncleTom29/ExitCheck`, has been suspended. This repository was republished under **hackcat29** on **October 11, 2026** to restore reviewer access; its creation date is the migration date, not the date the project was developed.
+
+The original commit history has been preserved without rewriting its dates or hashes. The project commits from **October 3, 2026**, before the October 4 submission deadline, remain available here: [original implementation (`f752f17`)](https://github.com/hackcat29/ExitCheck/commit/f752f17) and [last pre-migration revision (`c390389`)](https://github.com/hackcat29/ExitCheck/commit/c390389). The October 11 migration commits update repository references and documentation; they do not represent a new implementation of the project. Historical Hedera testnet transaction evidence is retained in [docs/EVIDENCE.md](docs/EVIDENCE.md).
+
+Please assess the original project history and on-chain evidence separately from the new repository's creation date. This note explains provenance and does not claim an organizer-approved deadline extension.
+
 ## 1. Clone and install
 
 Requirements: Node **20.18.3 or later**, npm and Git. Node 22 LTS is used in CI.
