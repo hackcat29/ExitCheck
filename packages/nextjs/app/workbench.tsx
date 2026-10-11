@@ -125,7 +125,7 @@ export default function Workbench() {
           <span className="tag">Hedera developer template</span>
         </div>
         <a
-          href="https://github.com/UncleTom29/ExitCheck"
+          href="https://github.com/hackcat29/ExitCheck"
           target="_blank"
           rel="noreferrer"
         >
@@ -606,7 +606,7 @@ export default function Workbench() {
           <h3>1. Clone and install</h3>
           <pre>
             {
-              'git clone https://github.com/UncleTom29/ExitCheck.git\ncd ExitCheck\nnpm ci\nnpm run check'
+              'git clone https://github.com/hackcat29/ExitCheck.git\ncd ExitCheck\nnpm ci\nnpm run check'
             }
           </pre>
           <h3>2. Read actual testnet balances and a SaucerSwap pool</h3>
@@ -645,7 +645,7 @@ export default function Workbench() {
           <p>
             Read the{' '}
             <a
-              href="https://github.com/UncleTom29/ExitCheck/blob/main/README.md"
+              href="https://github.com/hackcat29/ExitCheck/blob/main/README.md"
               target="_blank"
               rel="noreferrer"
             >
