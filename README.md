@@ -9,7 +9,7 @@ The CLI is the primary workflow. A small Next.js example exposes the same analys
 Requirements: Node **20.18.3 or later**, npm and Git. Node 22 LTS is used in CI.
 
 ```sh
-git clone https://github.com/UncleTom29/ExitCheck.git
+git clone https://github.com/hackcat29/ExitCheck.git
 cd ExitCheck
 npm ci
 npm run check
@@ -20,7 +20,7 @@ No account, wallet, key or `.env` file is needed for the example or public netwo
 ### Or create a project with Scaffold-HBAR
 
 ```sh
-npm create scaffold-hbar@latest exitcheck -- --template UncleTom29/ExitCheck --package-manager npm --solidity-framework hardhat --frontend nextjs-app --skip-hedera-skills --skip-install --yes
+npm create scaffold-hbar@latest exitcheck -- --template hackcat29/ExitCheck --package-manager npm --solidity-framework hardhat --frontend nextjs-app --skip-hedera-skills --skip-install --yes
 cd exitcheck
 npm ci
 ```
